@@ -1,49 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
-  const onChange = (event) => {
-    setToDo(event.target.value);
-  };
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (toDo === "") {
-      return;
-    }
-    setToDo("");
-    setToDos((currentArray) => [...currentArray, toDo]);
-  };
-  const deleteBtn = (index) => {
-    setToDos((curToDos) =>
-      curToDos.filter((_, curindex) => curindex !== index)
-    );
-  };
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  const [coin, setCoin] = useState(1);
+  const [money, setMoney] = useState(1);
+
+  function mymoney(event) {
+    setMoney(event.target.value);
+  }
+
+  function coinSelected(event) {
+    setCoin(event.target.value);
+  }
+
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers?limit=40")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
   return (
     <div>
-      <h1>My To Dos ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          onChange={onChange}
-          value={toDo}
-          type="text"
-          placeholder="Write your to do...."
-        />
-        <button>Add to do</button>
-      </form>
-      <hr />
-      <ul>
-        {toDos.map((item, index) => {
-          return (
-            <div>
-              <li key={index}>{item}</li>
-              <button onClick={() => deleteBtn(index)}>X</button>
-            </div>
-          );
-        })}
-      </ul>
+      <h1>The Coins!</h1>
+      {loading ? (
+        <strong>Loading...</strong>
+      ) : (
+        <div>
+          <select onChange={coinSelected}>
+            {coins.map((coin) => {
+              return (
+                <option key={coin.id} value={coin.quotes.USD.price}>
+                  {coin.name} ({coin.symbol}): {coin.quotes.USD.price} USD
+                </option>
+              );
+            })}
+          </select>
+          <br />
+          <input onChange={mymoney} placeholder="Dollars" type="text" />
+          <br />
+          <br />
+          <div>
+            <span>You can get </span>
+            <input
+              value={money === 1 ? null : Math.floor(money / coin)}
+              type="number"
+            />
+            <span> Coins</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
 export default App;
