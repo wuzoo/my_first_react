@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from "../css/Detail.module.css";
 
 function Detail() {
   const { id } = useParams();
@@ -15,24 +14,20 @@ function Detail() {
   };
   useEffect(() => {
     getMoive();
-  }, []);
+  });
 
   return (
-    <div className={styles.body}>
-      <div className={styles.backimg}>
+    <div>
+      <div>
         <img src={movie.background_image} alt={movie.title}></img>
       </div>
-      <div className={styles.top}>
-        <div className={styles.imgbox}>
-          <img
-            className={styles.img}
-            src={movie.medium_cover_image}
-            alt={movie.title}
-          ></img>
+      <div>
+        <div>
+          <img src={movie.medium_cover_image} alt={movie.title}></img>
         </div>
         <div>
-          <h1 className={styles.title}>{movie.title}</h1>
-          <div className={styles.header}>
+          <h1>{movie.title}</h1>
+          <div>
             <p>Rating: {movie.rating}</p>
             <p>Runtime: {movie.runtime}</p>
             <p>Release Year: {movie.year}</p>
@@ -40,7 +35,7 @@ function Detail() {
           </div>
         </div>
       </div>
-      <div className={styles.description}>
+      <div>
         <p>{movie.description_full}</p>
       </div>
     </div>

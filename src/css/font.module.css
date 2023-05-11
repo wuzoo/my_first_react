@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Oswald&family=Ubuntu&display=swap");
+@import "./reset.css";
+
+.logo {
+  font-family: "Oswald", sans-serif;
+}
+.title {
+  font-family: "Open Sans", sans-serif;
+}
+.list {
+  font-family: "Ubuntu", sans-serif;
+}

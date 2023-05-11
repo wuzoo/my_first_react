@@ -1,4 +1,5 @@
-.btn {
+.btn:nth-child() {
   color: white;
   background-color: tomato;
+  
 }
